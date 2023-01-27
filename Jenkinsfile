@@ -11,18 +11,18 @@ pipeline {
                 }
            }
         }
-        stage('Build') {
+        stage('Build frontend') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
             }
             steps {
                 script {
-                    dockerImage = docker.build("bootcamp-app:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
+                    dockerImage = docker.build("bootcamp-frontend:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
                     
                 }
             }
         }
-        stage('Push docker image') {
+        stage('Push docker image frontend') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
             }
@@ -34,6 +34,29 @@ pipeline {
                 }
             }
         }
+        stage('Build backend') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                script {
+                    dockerImage = docker.build("bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")
+                    
+                }
+            }
+        }
+        stage('Push docker backend') {
+            when {
+                expression { env.BRANCH_NAME == 'main' }
+            }
+            steps {
+                script {
+                    docker.withRegistry('http://localhost:5000') {
+                        dockerImage.push()
+                    }
+                }
+            }
+        }   
         stage('Deploy docker') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
