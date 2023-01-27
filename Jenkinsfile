@@ -17,7 +17,8 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage = docker.build("bootcamp-app:${env.BRANCH_NAME}-${env.BUILD_ID}")
+                    dockerImage = docker.build("bootcamp-app:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
+                    
                 }
             }
         }
