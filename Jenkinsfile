@@ -17,7 +17,7 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage = docker.build("bootcamp-frontend:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
+                    dockerImage = docker.build("molero/bootcamp-frontend:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
                     
                 }
             }
@@ -41,7 +41,7 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage = docker.build("bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")                    
+                    dockerImage = docker.build("molero/bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")                    
                 }
             }
         }
