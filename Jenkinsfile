@@ -45,18 +45,6 @@ pipeline {
                 }
             }
         }
-        stage('Push docker backend') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    docker.withRegistry('http://localhost:5000') {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
         stage('Push docker image backend') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
