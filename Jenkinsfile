@@ -28,8 +28,9 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('http://localhost:5000') {
-                        dockerImage.push()
+                    withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
+                    {
+                       dockerImage.push()
                     }
                 }
             }
@@ -40,8 +41,7 @@ pipeline {
             }
             steps {
                 script {
-                    dockerImage = docker.build("bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")
-                    
+                    dockerImage = docker.build("bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")                    
                 }
             }
         }
@@ -51,8 +51,9 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('http://localhost:5000') {
-                        dockerImage.push()
+                    withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
+                    {
+                       dockerImage.push()
                     }
                 }
             }
