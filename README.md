@@ -1,2 +1,5 @@
 # bootcampapp
-test
+
+Deploy 
+
+docker compose up -d
