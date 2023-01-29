@@ -11,23 +11,24 @@ pipeline {
                 }
            }
         }
-        stage('Deploy docker') {
+
+        stage('Test') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
             }
             steps {
                 echo "end"
                 script {
-                docker.withTool("default") {
-                     withDockerServer([uri: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
-                     sh "printenv"
-                     sh "docker images"
-                     sh 'docker ps'
-                   }
+                     sshagent(credentials : ['deploy']) {
+                        sh "echo pwd"
+                        sh 'ssh -t -t  192.168.1.120 -o StrictHostKeyChecking=no'
+                        sh "echo pwd"
+                        sh 'sudo -i -u root'
+                        sh 'cd /opt/docker/web'
+                        sh 'echo pwd'
+                    }
                 }
-               }
             }
         }
-        
-    }
+    }    
 }
