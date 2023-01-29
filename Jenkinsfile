@@ -21,7 +21,7 @@ pipeline {
                 script {
                      sshagent(credentials : ['deploy']) {
                         sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
-                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir /home/share/tmp'"
+                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir -p /home/share/tmp'"
                         sh "ls -la"
                     }
                 }
