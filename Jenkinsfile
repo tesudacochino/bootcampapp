@@ -20,14 +20,9 @@ pipeline {
                 echo "end"
                 script {
                      sshagent(credentials : ['deploy']) {
-                        sh "echo pwd"
-                        sh 'env'
                         sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
-                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'pwd'"
-                        sh "echo pwd"
-                        sh 'pwd'
-                        sh 'cd /tmp'
-                        sh 'pwd'
+                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir /home/share/tmp'"
+                        sh "ls -la"
                     }
                 }
             }
