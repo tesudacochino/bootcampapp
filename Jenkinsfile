@@ -23,8 +23,7 @@ pipeline {
                         sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
                         sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir -p /home/share/tmp'"
                         sh "scp docker-compose.yml 192.168.1.203:/home/share/tmp/"
-                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'cd /home/share/tmp'"
-                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'docker-compose up -d'"
+                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'cd /home/share/tmp && docker-compose up -d'"
                     }
                 }
             }
