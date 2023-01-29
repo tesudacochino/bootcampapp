@@ -19,7 +19,7 @@ pipeline {
                 echo "end"
                 withEnv(["DOCKER_HOST=root@192.168.1.120"]) {
                     sshagent( credentials: ['deploy']) {
-                        sh "docker -h 192.168.1.120 ps"
+                        sh "docker -H 192.168.1.120 ps"
                     }
                 }
             }
