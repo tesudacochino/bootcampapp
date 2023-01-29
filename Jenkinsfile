@@ -22,7 +22,8 @@ pipeline {
                      sshagent(credentials : ['deploy']) {
                         sh "echo pwd"
                         sh 'env'
-                        sh 'ssh -t -t 192.168.1.203 -o StrictHostKeyChecking=no "pwd"'
+                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
+                        sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'pwd'"
                         sh "echo pwd"
                         sh 'pwd'
                         sh 'cd /tmp'
