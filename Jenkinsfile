@@ -17,10 +17,8 @@ pipeline {
             }
             steps {
                 echo "end"
-                withEnv(["DOCKER_HOST=root@192.168.1.120"]) {
-                    sshagent( credentials: ['deploy']) {
-                        sh "docker -H ssh://192.168.1.120 ps"
-                    }
+                    withDockerServer([url: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
+                    sh 'docker ps'
                 }
             }
         }
