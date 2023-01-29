@@ -17,9 +17,13 @@ pipeline {
             }
             steps {
                 echo "end"
-                    withDockerServer([uri: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
-                    sh 'docker ps'
-                }
+                docker.withTool("default") {
+                     withDockerServer([uri: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
+                     sh "printenv"
+                     sh "docker images"
+                     sh 'docker ps'
+                   }
+                } 
             }
         }
         
