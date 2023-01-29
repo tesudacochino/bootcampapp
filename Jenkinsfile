@@ -22,11 +22,11 @@ pipeline {
                      sshagent(credentials : ['deploy']) {
                         sh "echo pwd"
                         sh 'env'
-                        sh 'ssh admin@192.168.1.203 "docker ps"'
+                        sh 'ssh -t -t  192.168.1.203 -o StrictHostKeyChecking=no'
                         sh "echo pwd"
-                        sh 'sudo -i -u root'
-                        sh 'cd /opt/docker/web'
-                        sh 'echo pwd'
+                        sh 'pwd'
+                        sh 'cd /tmp'
+                        sh 'pwd'
                     }
                 }
             }
