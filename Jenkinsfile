@@ -11,53 +11,6 @@ pipeline {
                 }
            }
         }
-        stage('Build frontend') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    dockerImage = docker.build("molero/bootcamp-frontend:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
-                    
-                }
-            }
-        }
-        stage('Push docker image frontend') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
-                    {
-                       dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('Build backend') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    dockerImage = docker.build("molero/bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")                    
-                }
-            }
-        }
-        stage('Push docker image backend') {
-            when {
-                expression { env.BRANCH_NAME == 'main' }
-            }
-            steps {
-                script {
-                    withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
-                    {
-                       dockerImage.push()
-                    }
-                }
-            }
-        }
         stage('Deploy docker') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
@@ -66,7 +19,7 @@ pipeline {
                 echo "end"
                 withEnv(["DOCKER_HOST=root@192.168.1.120"]) {
                     sshagent( credentials: ['deploy']) {
-                        sh "ls "
+                        sh "docker -h 192.168.1.120 ps"
                     }
                 }
             }
