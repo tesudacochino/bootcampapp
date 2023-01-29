@@ -21,6 +21,7 @@ pipeline {
                 script {
                      sshagent(credentials : ['deploy']) {
                         sh "echo pwd"
+                        sh 'pwd'
                         sh 'ssh -t -t  192.168.1.120 -o StrictHostKeyChecking=no'
                         sh "echo pwd"
                         sh 'sudo -i -u root'
