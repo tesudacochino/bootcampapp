@@ -5,8 +5,6 @@ services:
     image: molero/bootcamp-backend:main-8
     container_name: myapp-node-server
     command: /usr/src/app/node_modules/.bin/nodemon server.js
-    ports:
-      - "8080:8080"
     depends_on:
       - mongo
     environment:
@@ -26,5 +24,5 @@ services:
     depends_on:
       - server
     ports:
-      - "3000:3000"
+      - "3001:3000"
 
