@@ -17,7 +17,7 @@ pipeline {
             }
             steps {
                 echo "end"
-                    withDockerServer([url: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
+                    withDockerServer([uri: 'tcp://192.168.1.120:2375', credentialsId: 'deploy']) {
                     sh 'docker ps'
                 }
             }
