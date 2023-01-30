@@ -14,7 +14,7 @@ export class ListItems extends React.Component {
     }
 
     refreshItems = () => {
-        axios.get('http://localhost:8080/posts/').then((response) => {
+        axios.get('http://localhost:8081/posts/').then((response) => {
             console.log(response.data.data);
             this.setState({
                 items: response.data.data
@@ -27,7 +27,7 @@ export class ListItems extends React.Component {
     }
 
     handleAddClick = () => {
-        axios.post('http://localhost:8080/posts/', {
+        axios.post('http://localhost:8081/posts/', {
             "author": this.getRandom(),
             "body": this.getRandom(),
             "title": this.getRandom(),
@@ -38,7 +38,7 @@ export class ListItems extends React.Component {
     }
 
     handleRemoveClick = (id) => {
-        axios.delete('http://localhost:8080/posts/' + id).then(() => {
+        axios.delete('http://localhost:8081/posts/' + id).then(() => {
             console.log("delete");
             this.refreshItems();
         });

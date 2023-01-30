@@ -58,19 +58,22 @@ pipeline {
                 }
             }
         }
-        stage('Deploy docker') {
+        stage('Deploy') {
             when {
                 expression { env.BRANCH_NAME == 'main' }
             }
             steps {
                 echo "end"
-                withEnv(["DOCKER_HOST=root@192.168.1.120"]) {
-                    sshagent( credentials: ['deploy']) {
-                        sh "ls "
+                script {
+                     sshagent(credentials : ['deploy']) {
+                            sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
+                            sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir -p /home/share/tmp'"
+                            sh "scp docker-compose.yml 192.168.1.203:/home/share/tmp/"
+                            sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'cd /home/share/tmp && docker-compose up -d'"
+                        }
                     }
                 }
             }
         }
-        
     }
 }
