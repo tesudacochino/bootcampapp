@@ -18,6 +18,7 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build("molero/bootcamp-frontend:${env.BRANCH_NAME}-${env.BUILD_ID}","./client/")
+                    dockerImageLatest = docker.build("molero/bootcamp-frontend:latest","./client/")
                     
                 }
             }
@@ -31,6 +32,7 @@ pipeline {
                     withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
                     {
                        dockerImage.push()
+                       dockerImageLatest.push()
                     }
                 }
             }
@@ -42,6 +44,7 @@ pipeline {
             steps {
                 script {
                     dockerImage = docker.build("molero/bootcamp-backend:${env.BRANCH_NAME}-${env.BUILD_ID}","./server/")                    
+                    dockerImage = docker.build("molero/bootcamp-backend:latest","./server/")
                 }
             }
         }
@@ -54,6 +57,7 @@ pipeline {
                     withDockerRegistry([ credentialsId: "dockerhub-mole", url: "" ]) 
                     {
                        dockerImage.push()
+                       dockerImageLatest.push()
                     }
                 }
             }
@@ -66,7 +70,6 @@ pipeline {
                 echo "end"
                 script {
                      sshagent(credentials : ['deploy']) {
-                            sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'whoami'"
                             sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'mkdir -p /home/share/tmp'"
                             sh "scp docker-compose.yml 192.168.1.203:/home/share/tmp/"
                             sh "ssh -o StrictHostKeyChecking=no -t -t 192.168.1.203  'cd /home/share/tmp && docker-compose up -d'"
