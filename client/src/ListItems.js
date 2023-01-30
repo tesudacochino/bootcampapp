@@ -47,7 +47,7 @@ export class ListItems extends React.Component {
     render = () => {
         return (
             <>
-                <button onClick={this.handleAddClick}>Add Element</button>
+                <button onClick={this.handleAddClick}>Add</button>
                 {this.state.items.map((row) =>
                     <span key={row._id}>{row.title} <button onClick={() => this.handleRemoveClick(row._id)}>Remove</button></span>
                 )}
